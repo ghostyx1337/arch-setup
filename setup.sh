@@ -4,6 +4,10 @@ set -e
 
 echo "=== Updating Arch Linux System ==="
 sudo pacman -Syu --noconfirm
+# Désactiver la génération des packages de debug pour accélérer yay
+sudo sed -i 's/OPTIONS=(/OPTIONS=(!debug /' /etc/makepkg.conf
+sudo sed -i "s/#MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j\$(nproc)\"/" /etc/makepkg.conf
+sudo sed -i 's/#BUILDDIR=\/tmp\/makepkg/BUILDDIR=\/tmp\/makepkg/' /etc/makepkg.conf
 
 # ----------------------------------------------------------------------
 # 1. Base Development, Security & Core Desktop Packages
